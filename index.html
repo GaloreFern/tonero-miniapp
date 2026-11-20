@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TONERO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1b;color:white;font-family:Arial,sans-serif;padding:20px 16px 90px}
+header{display:flex;justify-content:space-between;font-size:23px;font-weight:bold;margin:15px 0 30px}
+h1{font-size:27px}
+.muted{color:#91a5c3}
+.card{background:linear-gradient(140deg,#182b48,#101a2d);border:1px solid #263a58;border-radius:23px;padding:22px;margin:17px 0}
+.balance{text-align:center;padding:30px 15px}
+.amount{font-size:43px;font-weight:bold;margin:18px}
+.blue{color:#65aeff}
+button{border:0;border-radius:13px;padding:15px;background:#278cff;color:white;font-weight:bold;font-size:15px;width:100%;margin-top:10px}
+.secondary{background:#203451}
+.row{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid #263a58}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0d1728;display:flex;justify-content:space-around;padding:12px 2px}
+nav button{background:none;color:#91a5c3;width:auto;margin:0;padding:8px 3px;font-size:12px}
+nav button.active{color:#65aeff}
+.page{display:none}.page.active{display:block}
+input{width:100%;padding:14px;background:#091426;color:white;border:1px solid #304665;border-radius:12px;margin:12px 0}
+.small{font-size:12px;line-height:1.5;color:#9aabc3}
+</style>
+</head>
+<body>
+<header>TONERO<span class="blue">.</span><span class="blue" style="font-size:12px">DEMO</span></header>
+
+<section id="home" class="page active">
+<p class="muted">Твой майнинг-центр</p>
+<h1>Добро пожаловать</h1>
+<div class="card balance">
+<div class="muted">Твой баланс</div>
+<div class="amount" id="balance">1 250.00</div>
+<div class="blue"><b>GRAM</b></div>
+<button onclick="claim()">Забрать</button>
+<button class="secondary" onclick="show('wallet')">Кошелёк</button>
+</div>
+<div class="card">
+<b>Майнинг</b>
+<div class="row"><span class="muted">Скорость</span><b>+2.5 GRAM / час</b></div>
+<div class="row"><span class="muted">Статус</span><b style="color:#55d69a">Активен</b></div>
+<div class="row"><span class="muted">Начисление</span><b>Демо</b></div>
+</div>
+<div class="card">
+<b>Быстрый старт</b>
+<p class="small">Добро пожаловать в TONERO!</p>
+</div>
+</section>
+
+<section id="wallet" class="page">
+<h1>Кошелёк</h1>
+<div class="card">
+<p class="muted">Твой публичный TON-адрес</p>
+<input id="address" placeholder="Введи публичный адрес">
+<button onclick="save()">Сохранить</button>
+<p class="small">Никогда не вводи seed-фразу или приватный ключ.</p>
+</div>
+<div class="card">
+<b>Пополнение</b>
+<p class="small">Реальные платежи пока отключены. Это демонстрационная версия.</p>
+</div>
+<div class="card">
+<b>TONERO — адрес получателя</b>
+<p class="small">UQCanEuek3WK_OcGGhQSYdG-Al2VIT6ts8kWFnvDKcsFHOcJ</p>
+</div>
+</section>
+
+<section id="friends" class="page">
+<h1>Друзья</h1>
+<div class="card">
+<b>Реферальная система</b>
+<p class="muted">Приглашай друзей в TONERO</p>
+<button onclick="alert('Реферальная система пока в разработке')">Пригласить</button>
+</div>
+</section>
+
+<section id="missions" class="page">
+<h1>Задания</h1>
+<div class="card"><b>Посети приложение</b><p class="muted">+10 GRAM</p></div>
+<div class="card"><b>Пригласи друга</b><p class="muted">+25 GRAM</p></div>
+<div class="card"><b>Заполни профиль</b><p class="muted">+5 GRAM</p></div>
+</section>
+
+<section id="more" class="page">
+<h1>Профиль</h1>
+<div class="card">
+<p>TONERO Mine & Earn</p>
+<p class="muted">Версия 1.0</p>
+<p class="small">Демонстрационное приложение.</p>
+</div>
+</section>
+
+<nav>
+<button class="active" onclick="show('home',this)">⌂<br>Главная</button>
+<button onclick="show('wallet',this)">◈<br>Кошелёк</button>
+<button onclick="show('friends',this)">♧<br>Друзья</button>
+<button onclick="show('missions',this)">☷<br>Задания</button>
+<button onclick="show('more',this)">•••<br>Ещё</button>
+</nav>
+
+<script>
+let balance=1250;
+function show(id,btn){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(btn)btn.classList.add('active');
+}
+function claim(){
+balance+=2.5;
+document.getElementById('balance').textContent=balance.toFixed(2);
+}
+function save(){
+let a=document.getElementById('address').value.trim();
+if(!a){alert('Введи адрес');return}
+localStorage.setItem('tonero_address',a);
+alert('Адрес сохранён');
+}
+document.getElementById('address').value=localStorage.getItem('tonero_address')||'';
+</script>
+</body>
+</html>
